@@ -1,8 +1,10 @@
+import React from 'react';
+import ExpenseItem from './components/expenses/ExpenseItem.jsx';
 
-function App() {
-
-    return <h1>안녕 리액트!</h1>;
-
-}
+const App = () => (
+    <>
+        <ExpenseItem />
+    </>
+);
 
 export default App
