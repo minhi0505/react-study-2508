@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './ExpenseForm.css';
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ onAdd }) => {
 
     // console.log('렌더링 시작!');
 
@@ -36,6 +36,12 @@ const ExpenseForm = () => {
 
         console.log('userInput: ', userInput);
 
+        // 상위컴포넌트(App)이 내려준 onAddExpense라는 함수를 onAdd로 내려받음
+        onAdd({
+            ...userInput,
+            date: new Date(userInput.date)
+        });
+
         // 입력창 초기화
         /*
           input태그에다가 값을 입력하면 -> 상태변수에 저장됨  (단방향)
@@ -55,22 +61,21 @@ const ExpenseForm = () => {
         /*
           리액트는 기존객체에서 프로퍼티 값만을 바꾸면 상태변경을 감지하지 못함
          */
-        const newUserInput = {
-            ...userInput,
+        setUserInput(prevUserInput => ({
+            ...prevUserInput,
             title: e.target.value,
-        };
-        setUserInput(newUserInput);
+        }));
     };
 
-    const priceChangeHandler = e => setUserInput({
-        ...userInput,
+    const priceChangeHandler = e => setUserInput(prev => ({
+        ...prev,
         price: +e.target.value,
-    });
+    }));
 
-    const dateChangeHandler = e => setUserInput({
-        ...userInput,
+    const dateChangeHandler = e => setUserInput(prev => ({
+        ...prev,
         date: e.target.value,
-    });
+    }));
 
     return (
         <form onSubmit={handleSubmit}>
