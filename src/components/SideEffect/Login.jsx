@@ -1,41 +1,35 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import './App.css';
+import AddUsers from './components/Users/AddUsers.jsx';
+import UserList from './components/Users/UserList.jsx';
+import MainHeader from './components/SideEffect/MainHeader.jsx';
+import Home from './components/SideEffect/Home.jsx';
+import Login from './components/SideEffect/Login.jsx';
 
-import Card from '../ui/Card';
-import styles from './Login.module.css';
-import Button from '../ui/Button';
+const App = () => {
 
-const Login = () => {
+    // 로그인 상태 체크
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogin = (email, password) => {
+
+        // 로그인 검증
+        if (email === 'abc@def.com' && password === '12345678') {
+            setIsLoggedIn(true);
+        } else {
+            alert('로그인 실패!');
+        }
+    };
 
     return (
-        <Card className={styles.login}>
-            <form>
-                <div
-                    className={`${styles.control}`}>
-                    <label htmlFor='email'>E-Mail</label>
-                    <input
-                        type='email'
-                        id='email'
-                    />
-                </div>
-                <div
-                    className={`${styles.control}`}>
-                    <label htmlFor='password'>Password</label>
-                    <input
-                        type='password'
-                        id='password'
-                    />
-                </div>
-                <div className={styles.actions}>
-                    <Button
-                        type='submit'
-                        className={styles.btn}
-                    >
-                        Login
-                    </Button>
-                </div>
-            </form>
-        </Card>
+        <>
+            <MainHeader />
+            <main>
+                {isLoggedIn && <Home/>}
+                {!isLoggedIn && <Login onLogin={handleLogin} />}
+            </main>
+        </>
     );
 };
 
-export default Login;
+export default App;
